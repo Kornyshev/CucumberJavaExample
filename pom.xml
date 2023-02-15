@@ -13,16 +13,20 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
         <junit-jupiter.version>5.9.0</junit-jupiter.version>
         <junit-platform-console.version>1.9.0</junit-platform-console.version>
-        <cucumber-java.version>7.9.0</cucumber-java.version>
+        <cucumber-java.version>7.2.3</cucumber-java.version>
         <slf4j-api.version>2.0.5</slf4j-api.version>
         <logback-classic.version>1.4.4</logback-classic.version>
         <lombok.version>1.18.24</lombok.version>
+
+        <aspectj.version>1.9.19</aspectj.version>
+        <allure-maven.version>2.10.0</allure-maven.version>
+        <allure-cucumber7-jvm.version>2.17.3</allure-cucumber7-jvm.version>
     </properties>
 
     <dependencies>
@@ -76,6 +80,11 @@
             <artifactId>junit-platform-console</artifactId>
             <version>${junit-platform-console.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure-cucumber7-jvm.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -96,9 +105,55 @@
                     <includes>
                         <include>**/RunCucumberTests.java</include>
                     </includes>
+                    <systemPropertyVariables>
+                        <allure.results.directory>target/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        -Dcucumber.plugin="io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
+                    </argLine>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven.version}</version>
+                <configuration>
+                    <reportVersion>${allure-cucumber7-jvm.version}</reportVersion>
+                    <allureDownloadUrl>https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure-cucumber7-jvm.version}/allure-commandline-${allure-cucumber7-jvm.version}.zip</allureDownloadUrl>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven.version}</version>
+                <configuration>
+                    <reportVersion>${allure-cucumber7-jvm.version}</reportVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
 
 </project>
