@@ -13,14 +13,15 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
-        <junit-jupiter.version>5.9.0</junit-jupiter.version>
-        <slf4j-api.version>2.0.5</slf4j-api.version>
-        <logback-classic.version>1.4.4</logback-classic.version>
-        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-        <cucumber-java.version>7.9.0</cucumber-java.version>
-        <junit-platform-console.version>1.9.0</junit-platform-console.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+
+        <junit-jupiter.version>5.9.0</junit-jupiter.version>
+        <junit-platform-console.version>1.9.0</junit-platform-console.version>
+        <cucumber-java.version>7.9.0</cucumber-java.version>
+        <slf4j-api.version>2.0.5</slf4j-api.version>
+        <logback-classic.version>1.4.4</logback-classic.version>
         <lombok.version>1.18.24</lombok.version>
     </properties>
 
