@@ -4,6 +4,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.extern.slf4j.Slf4j;
+import models.Calculation;
+import models.Numbers;
 import org.junit.jupiter.api.Assertions;
 
 @Slf4j
@@ -23,6 +25,25 @@ public class MySteps {
     public void intWasSetUpAsSecondNumber(int secondNumber) {
         log.info("Method: 'intWasSetUpAsSecondNumber(int secondNumber)'");
         SECOND = secondNumber;
+    }
+
+    @Given("calculation object:")
+    public void calculationObjectExperiment(Calculation calculation) {
+        log.info("Method: 'calculationObjectExperiment()'");
+        FIRST = calculation.getFirstNumber();
+        SECOND = calculation.getSecondNumber();
+    }
+
+    @Given("first number via Enum {}")
+    public void firstNumberViaEnum(Numbers number) {
+        log.info("Method: 'firstNumberViaEnum()'");
+        FIRST = number.getIntValue();
+    }
+
+    @Given("second number via Enum {}")
+    public void secondNumberViaEnum(Numbers number) {
+        log.info("Method: 'secondNumberViaEnum()'");
+        SECOND = number.getIntValue();
     }
 
     @When("user multiplies first and second numbers")
